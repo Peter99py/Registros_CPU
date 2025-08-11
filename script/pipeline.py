@@ -1,51 +1,13 @@
 import pandas as pd
+import os
+import shutil
 
-data_path = ("C:/Users/pedro/OneDrive/Área de Trabalho/Registros CPU/data_raw")
-file_name = "CT-Log 2025-06-28 00-48-52.csv"
-output_path = ("C:/Users/pedro/OneDrive/Área de Trabalho/Registros CPU/data_processed")
-dados = pd.read_csv(f"{data_path}/{file_name}", encoding="latin1", skiprows=7) # type: ignore
-    
-# Escolhendo colunas
-dados = dados.loc[:, ~dados.columns.str.startswith("Unnamed")]
-dados = dados.drop(columns=["Core 0", "Core 1", "Core 2", "Core 3", "Core 4", "Core 5"])
+# Definindo os caminhos das pastas
+datapath = "data_raw"
+outputpath = "data_processed"
+loaded_raw_path = "data_loaded_raw"
 
-# Definindo o tipo da columa de data/hora
-dados["Time"] = pd.to_datetime(dados["Time"], format="%H:%M:%S %m/%d/%y", errors="coerce")
-
-# Reordenando as colunas do df
-dados = dados[['Time',
-                'Core 0 Temp. (°)',
-                'Low temp. (°)',
-                'High temp. (°)',
-                'Core load (%)',
-                'Core speed (MHz)',
-                'Core 1 Temp. (°)', 
-                'Low temp. (°).1',
-                'High temp. (°).1',
-                'Core load (%).1',
-                'Core speed (MHz).1',
-                'Core 2 Temp. (°)',
-                'Low temp. (°).2',
-                'High temp. (°).2',
-                'Core load (%).2',
-                'Core speed (MHz).2',
-                'Core 3 Temp. (°)',
-                'Low temp. (°).3',
-                'High temp. (°).3',
-                'Core load (%).3',
-                'Core speed (MHz).3',
-                'Core 4 Temp. (°)',
-                'Low temp. (°).4',
-                'High temp. (°).4',
-                'Core load (%).4',
-                'Core speed (MHz).4',
-                'Core 5 Temp. (°)',
-                'Low temp. (°).5',
-                'High temp. (°).5',
-                'Core load (%).5',
-                'Core speed (MHz).5',
-                'CPU 0 Power']]
-
+# Define o mapeamento de renomeação de colunas
 renomear_colunas = {
     "Time": "time",
     "Core 0 Temp. (°)": "core_temp_0",
@@ -81,8 +43,42 @@ renomear_colunas = {
     "CPU 0 Power": "cpu_power"
 }
 
-# Aplicando a renomeação
-dados.rename(columns=renomear_colunas, inplace=True)
+for filename in os.listdir(datapath): # Busca todos os arquivos na pasta data_raw
+    if filename.endswith(".csv"):
+        filepath = os.path.join(datapath, filename)
+        print(f"Processando arquivo: {filename}")
 
+        try:
+            dados = pd.read_csv(filepath, encoding="latin1", skiprows=7) #type: ignore
 
-dados.to_csv(f"{output_path}/{file_name}", index=False)
+            dados = dados.loc[:, ~dados.columns.str.startswith("Unnamed")]
+            dados = dados.drop(columns=["Core 0", "Core 1", "Core 2", "Core 3", "Core 4", "Core 5"], errors='ignore')
+            
+            dados["Time"] = pd.to_datetime(dados["Time"], format="%H:%M:%S %m/%d/%y", errors="coerce")
+
+            colunas_esperadas = [
+                'Time',
+                'Core 0 Temp. (°)', 'Low temp. (°)', 'High temp. (°)', 'Core load (%)', 'Core speed (MHz)',
+                'Core 1 Temp. (°)', 'Low temp. (°).1', 'High temp. (°).1', 'Core load (%).1', 'Core speed (MHz).1',
+                'Core 2 Temp. (°)', 'Low temp. (°).2', 'High temp. (°).2', 'Core load (%).2', 'Core speed (MHz).2',
+                'Core 3 Temp. (°)', 'Low temp. (°).3', 'High temp. (°).3', 'Core load (%).3', 'Core speed (MHz).3',
+                'Core 4 Temp. (°)', 'Low temp. (°).4', 'High temp. (°).4', 'Core load (%).4', 'Core speed (MHz).4',
+                'Core 5 Temp. (°)','Low temp. (°).5','High temp. (°).5','Core load (%).5','Core speed (MHz).5',
+                'CPU 0 Power'
+            ]
+
+            dados = dados[colunas_esperadas]
+
+            dados.rename(columns=renomear_colunas, inplace=True)
+
+            output_filepath = os.path.join(outputpath, filename)
+            dados.to_csv(output_filepath, index=False)
+            print(f"Arquivo processado salvo em: {output_filepath}")
+
+            shutil.move(filepath, os.path.join(loaded_raw_path, filename))
+            print(f"Arquivo original movido para: {os.path.join(loaded_raw_path, filename)}")
+
+        except Exception as e:
+            print(f"Erro ao processar o arquivo {filename}: {e}")
+
+print("Processamento de todos os arquivos concluído.")
