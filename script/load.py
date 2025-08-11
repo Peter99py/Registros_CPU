@@ -57,7 +57,7 @@ def load_data_to_db():
                     dados.to_sql(nome_tabela, session.connection(), schema=schema, if_exists='append', index=False)
                     print(f"Dados do arquivo '{file_name}' adicionados à transação do banco de dados.")
 
-                    successfully_processed_file_paths.append((file_path, destination_file_path))
+                    successfully_processed_file_paths.append((file_path, destination_file_path)) # type: ignore
 
                 except Exception as e:
                     # Se um erro ocorrer ao processar ou adicionar UM arquivo à transação, a exceção é capturada aqui, e então lançada para o bloco `except` externo.
@@ -70,9 +70,9 @@ def load_data_to_db():
             print("\n--- Todos os dados foram carregados com sucesso no banco de dados! ---")
 
             # Move os arquivos APENAS SE A TRANSAÇÃO GERAL FOR BEM-SUCEDIDA.
-            for original_path, dest_path in successfully_processed_file_paths:
-                shutil.move(original_path, dest_path)
-                print(f"Arquivo original '{os.path.basename(original_path)}' movido para: {dest_path}")
+            for original_path, dest_path in successfully_processed_file_paths: # type: ignore
+                shutil.move(original_path, dest_path) # type: ignore
+                print(f"Arquivo original '{os.path.basename(original_path)}' movido para: {dest_path}") # type: ignore
 
         except Exception as e:
             # Em caso de qualquer erro (capturado pelo `raise` interno ou qualquer outro erro), o upload é desfeito (rollback), garantindo que nada seja salvo no banco de dados.
