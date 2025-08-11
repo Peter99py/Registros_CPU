@@ -20,10 +20,13 @@ def process_file(file_path, output_path): # type: ignore
     
     dados = pd.read_csv(file_path, encoding="latin1", skiprows=7) # type: ignore
     
+    linhas_iniciais = len(dados)
+    print(f"\nQtd. linhas antes do processamento: {linhas_iniciais}")
+
     # Remove colunas que começam com "Unnamed"
     dados = dados.loc[:, ~dados.columns.str.startswith("Unnamed")]
 
-    # Remove colunas específicas de "Core" que não serão reordenadas
+    # Remove colunas específicas de "Core"
     cols_to_drop = ["Core 0", "Core 1", "Core 2", "Core 3", "Core 4", "Core 5"]
 
     dados = dados.drop(columns=cols_to_drop)
@@ -66,6 +69,9 @@ def process_file(file_path, output_path): # type: ignore
     }
     
     dados.rename(columns=renomear_colunas, inplace=True)
+
+    linhas_finais = len(dados)
+    print(f"\nLinhas após o processamento: {linhas_finais} (removidas {linhas_iniciais - linhas_finais} linhas)")
 
     # Salva o DataFrame processado no caminho de saída
     dados.to_csv(output_path, index=False)  # type: ignore

@@ -40,6 +40,7 @@ def load_data_to_db():
         return
 
     print(f"Encontrados {len(files_to_load)} arquivos para carregar.")
+    total_rows_processed = 0
 
     with Session() as session:
         # Lista que armazena os caminhos dos arquivos que foram *adicionados à transação*
@@ -54,13 +55,19 @@ def load_data_to_db():
                 try:
                     dados = pd.read_csv(file_path) # type: ignore
 
+                    num_rows = len(dados)
+
                     dados.to_sql(nome_tabela, session.connection(), schema=schema, if_exists='append', index=False)
                     print(f"Dados do arquivo '{file_name}' adicionados à transação do banco de dados.")
 
                     successfully_processed_file_paths.append((file_path, destination_file_path)) # type: ignore
 
+                    total_rows_processed += num_rows
+                    print(f"Total de linhas processadas deste arquivo: {num_rows}")
+                    print(f"Total de linhas processadas até agora: {total_rows_processed}")
+
                 except Exception as e:
-                    # Se um erro ocorrer ao processar ou adicionar UM arquivo à transação, a exceção é capturada aqui, e então lançada para o bloco `except` externo.
+                    # Se um erro ocorrer ao processar ou adicionar UM arquivo à transação, a exceção é capturada aqui e lançada para o bloco `except` externo.
                     print(f"!!! ERRO ao processar o arquivo {file_name}: {e}")
                     print("!!! Este arquivo causou uma falha. Toda a transação será revertida.")
                     raise
