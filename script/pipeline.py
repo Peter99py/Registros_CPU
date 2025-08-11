@@ -15,10 +15,10 @@ processed_data_path = "data_processed"
 os.makedirs(loaded_data_path, exist_ok=True)
 os.makedirs(processed_data_path, exist_ok=True)
 
-def process_file(file_path, output_path):
-    print(f"Lendo o arquivo: {os.path.basename(file_path)}")
+def process_file(file_path, output_path): # type: ignore
+    print(f"Lendo o arquivo: {os.path.basename(file_path)}") # type: ignore
     
-    dados = pd.read_csv(file_path, encoding="latin1", skiprows=7)
+    dados = pd.read_csv(file_path, encoding="latin1", skiprows=7) # type: ignore
     
     # Remove colunas que começam com "Unnamed"
     dados = dados.loc[:, ~dados.columns.str.startswith("Unnamed")]
@@ -29,16 +29,16 @@ def process_file(file_path, output_path):
     dados = dados.drop(columns=cols_to_drop)
     
     # Remove colunas que são completamente vazias
-    dados = dados.dropna(axis=1, how='all')
+    dados = dados.dropna(axis=1, how='all') # type: ignore
 
     # Converte a coluna 'Time' para o formato datetime
     dados["Time"] = pd.to_datetime(dados["Time"], format="%H:%M:%S %m/%d/%y", errors="coerce")
     
     # Remove linhas que são completamente vazias
-    dados = dados.dropna(axis=0, how='all')
+    dados = dados.dropna(axis=0, how='all') # type: ignore
 
     # Remove qualquer linha que tenha pelo menos um valor vazio
-    dados = dados.dropna(axis=0, how='any')
+    dados = dados.dropna(axis=0, how='any') # type: ignore
 
     try:
         dados = dados[['Time',
@@ -68,7 +68,7 @@ def process_file(file_path, output_path):
     dados.rename(columns=renomear_colunas, inplace=True)
 
     # Salva o DataFrame processado no caminho de saída
-    dados.to_csv(output_path, index=False)
+    dados.to_csv(output_path, index=False)  # type: ignore
     print(f"\nArquivo processado e salvo em: {output_path}")
 
 def main():
@@ -84,7 +84,7 @@ def main():
 
     print(f"Encontrados {len(files_to_process)} arquivos para processar.")
     
-    # pega cada arquivo encontrado
+    # Pega cada arquivo encontrado
     for file_name in files_to_process:
         source_file_path = os.path.join(raw_data_path, file_name)
         destination_file_path = os.path.join(loaded_data_path, file_name)
