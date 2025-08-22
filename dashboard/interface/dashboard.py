@@ -8,7 +8,7 @@ def create_dashboard():
     st.write("Welcome to the dashboard!")
 
     df = get_coretemp_data()
-
+    
 
 if __name__ == "__main__":
     create_dashboard()
