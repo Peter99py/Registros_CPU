@@ -5,13 +5,31 @@ import pandas as pd
 conn = pyodbc.connect("DSN=PostgreSQL35W")
 
 #Média corespeed
-def corespeed_vs_temp():
-    try:        
+def time_vs_temp():
+    try:
         query = """SELECT
-                EXTRACT(HOUR FROM time) as time,
-                MIN(core_speed_0)::INTEGER as min_corespeed,
-                AVG(core_speed_0)::INTEGER as avg_corespeed,
-                MAX(core_speed_0)::INTEGER as max_corespeed
+                EXTRACT(HOUR FROM time) as "time of day",
+                MIN(core_temp_0)::INTEGER as "core temp",
+                'MIN' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+
+                UNION ALL
+
+                SELECT
+                EXTRACT(HOUR FROM time) as "time of day",
+                AVG(core_temp_0)::INTEGER as "core temp",
+                'AVG' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+
+                UNION ALL
+                SELECT
+                EXTRACT(HOUR FROM time) as "time of day",
+                MAX(core_temp_0)::INTEGER as "core temp",
+                'MAX' AS "type"
                 FROM coretemp.raw_data
                 GROUP BY
                 1

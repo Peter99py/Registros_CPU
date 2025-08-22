@@ -1,7 +1,7 @@
 
 import altair as alt
 
-def grafico_linhas_personalizado(df, coluna_x, coluna_y, titulo='Gráfico de Linhas'):
+def grafico_linhas_personalizado(df, coluna_x, coluna_y, coluna_categoria, titulo='Gráfico de Linhas'):
 
     chart = (
         alt.Chart(df)
@@ -9,6 +9,7 @@ def grafico_linhas_personalizado(df, coluna_x, coluna_y, titulo='Gráfico de Lin
         .encode(
             x=alt.X(f'{coluna_x}:O', title=coluna_x),
             y=alt.Y(f'{coluna_y}:Q', title=coluna_y),
+            color=alt.Color(f'{coluna_categoria}:N', title=coluna_categoria),
             tooltip=[coluna_x, coluna_y]
         ).properties(
             title=titulo,
