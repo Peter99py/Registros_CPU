@@ -1,11 +1,48 @@
 import pyodbc
 import pandas as pd
 
+# temperatura vs core speed
+def temp_vs_speed():
+    conn = pyodbc.connect("DSN=PostgreSQL35W")
+    try:
+        query = """SELECT
+                core_temp_0 as "core temp",
+                MIN(core_speed_0)::INTEGER as "core speed",
+                'MIN' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
 
-conn = pyodbc.connect("DSN=PostgreSQL35W")
+                UNION ALL
 
-#Média corespeed
+                SELECT
+                core_temp_0 as "core temp",
+                AVG(core_speed_0)::INTEGER as "core speed",
+                'AVG' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+
+                UNION ALL
+                SELECT
+                core_temp_0 as "core temp",
+                MAX(core_speed_0)::INTEGER as "core speed",
+                'MAX' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+                """
+        df = pd.read_sql(query, conn)
+        conn.close()
+        return df
+    except Exception as e:
+        print(f"Erro ao executar a consulta: {e}")
+        return None
+
+
+#tempo vs temperatura
 def time_vs_temp():
+    conn = pyodbc.connect("DSN=PostgreSQL35W")
     try:
         query = """SELECT
                 EXTRACT(HOUR FROM time) as "time of day",
@@ -29,6 +66,82 @@ def time_vs_temp():
                 SELECT
                 EXTRACT(HOUR FROM time) as "time of day",
                 MAX(core_temp_0)::INTEGER as "core temp",
+                'MAX' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+                """
+        df = pd.read_sql(query, conn)
+        conn.close()
+        return df
+    except Exception as e:
+        print(f"Erro ao executar a consulta: {e}")
+        return None
+    
+#tempo vs energia
+def time_vs_power():
+    conn = pyodbc.connect("DSN=PostgreSQL35W")
+    try:
+        query = """SELECT
+                EXTRACT(HOUR FROM time) as "time of day",
+                MIN(cpu_power)::INTEGER as "cpu power",
+                'MIN' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+
+                UNION ALL
+
+                SELECT
+                EXTRACT(HOUR FROM time) as "time of day",
+                AVG(cpu_power)::INTEGER as "cpu power",
+                'AVG' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+
+                UNION ALL
+                SELECT
+                EXTRACT(HOUR FROM time) as "time of day",
+                MAX(cpu_power)::INTEGER as "cpu power",
+                'MAX' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+                """
+        df = pd.read_sql(query, conn)
+        conn.close()
+        return df
+    except Exception as e:
+        print(f"Erro ao executar a consulta: {e}")
+        return None
+    
+#temperatura vs energia
+def temp_vs_power():
+    conn = pyodbc.connect("DSN=PostgreSQL35W")
+    try:
+        query = """SELECT
+                core_temp_0 as "core temp",
+                MIN(cpu_power)::INTEGER as "cpu power",
+                'MIN' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+
+                UNION ALL
+
+                SELECT
+                core_temp_0 as "core temp",
+                AVG(cpu_power)::INTEGER as "cpu power",
+                'AVG' AS "type"
+                FROM coretemp.raw_data
+                GROUP BY
+                1
+
+                UNION ALL
+                SELECT
+                core_temp_0 as "core temp",
+                MAX(cpu_power)::INTEGER as "cpu power",
                 'MAX' AS "type"
                 FROM coretemp.raw_data
                 GROUP BY

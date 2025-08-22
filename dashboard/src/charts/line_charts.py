@@ -1,7 +1,8 @@
 
 import altair as alt
 
-def grafico_linhas_personalizado(df, coluna_x, coluna_y, coluna_categoria, titulo='Gráfico de Linhas'):
+
+def grafico_linhas(df, coluna_x, coluna_y, coluna_categoria, titulo='Gráfico de Linhas'):
 
     chart = (
         alt.Chart(df)
