@@ -1,25 +1,23 @@
-seu_dashboard/
-├─ app.py
-├─ pages/
-│  ├─ 01_Visão_Geral.py
-│  ├─ 02_Análises.py
-│  └─ 99_Configurações.py
-├─ src/
-│  ├─ data/
-│  │  ├─ loader.py
-│  │  └─ transforms.py
-│  ├─ services/
-│  │  ├─ db.py
-│  │  └─ config.py
-│  ├─ charts/
-│  │  ├─ lines.py
-│  └─ ui/
-│     ├─ layout.py            header, sidebar, containers
-│     └─ widgets.py           filtros, inputs e formulários
-├─ assets/                    logos, ícones, CSS opcional
-├─ config.yml                 variáveis do app (ex.: datas padrão)
-├─ requirements.txt
-├─ README.md
-└─ .streamlit/
-   ├─ config.toml             tema/toolbar
-   └─ secrets.toml            credenciais (NÃO versionar)
+app.py
+pages/
+src/data/
+src/ui/
+src/charts/
+
+
+Quais métricas mostrar?
+relação da velocidade cores_speed do meu processador(min, máx, média) vs temperatura (velocidade eixo Y, temperatura eixo X)
+temperatura min, média e máx do meu processador durante as horas do dia (24 horas)(horas eixo X, temperatura eixo Y)
+gasto de energia min, médio e máx do meu processador durante as horas do dia (24 horas)(horas eixo X, gasto de energia eixo Y)
+relação do meu gasto de energia do meu processador pela temperatura min, média e máxima(gasto de energia eixo X, temperatura eixo Y)
+
+Uma página principal (app.py)
+Uma pasta pages/ com uma segunda página
+Dados simulados (para já ver algo funcionando)
+Sidebar com filtros (datas e categorias)
+Um gráfico de linha interativo (Altair)
+Depois evoluímos para:
+
+Conectar ao seu dataset real
+Adicionar mais páginas e KPIs
+Melhorar layout e performance
