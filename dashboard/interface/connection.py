@@ -40,7 +40,7 @@ def get_coretemp_data():
         FROM
             coretemp.raw_data AS cr
         """
-        df = pd.read_sql(query, connection)
+        df = pd.read_sql(query, connection) # type: ignore
         print(df)
         return df
     except pyodbc.Error as e:
