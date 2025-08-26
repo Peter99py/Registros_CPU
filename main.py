@@ -2,7 +2,7 @@ import os
 import scripts.pipeline as pipeline
 import scripts.load as load
 
-
+print("---Iniciando aplicação ---")
 
 def files():
 
@@ -19,7 +19,8 @@ def files():
 
 def main():
 
-    print('Executando pipeline...')
+    print('\n--- Executando pipeline ---')
+    input("\nPressione Enter para iniciar o processo de ETL.")
     pipeline.pipeline()
 
     input("\nPressione Enter para subir os arquivos para o banco de dados.")

@@ -32,7 +32,6 @@ def load_data_to_db():
 
     if not files_to_load:
         print("\nNenhum arquivo .csv encontrado na pasta 'data_processed'.")
-        input("\nPressione Enter para sair...")
         return
 
     print(f"Encontrados {len(files_to_load)} arquivos para carregar.")
