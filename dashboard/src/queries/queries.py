@@ -44,7 +44,7 @@ def temp_vs_speed():
     """
     try:
         with engine.connect() as conn:
-            df = pd.read_sql_query(text(query), conn)
+            df = pd.read_sql_query(text(query), conn) # type: ignore
         return df
     except Exception as e:
         print(f"Erro ao executar a consulta: {e}")
@@ -82,7 +82,7 @@ def time_vs_temp():
     """
     try:
         with engine.connect() as conn:
-            df = pd.read_sql_query(text(query), conn)
+            df = pd.read_sql_query(text(query), conn) # type: ignore
         return df
     except Exception as e:
         print(f"Erro ao executar a consulta: {e}")
@@ -120,7 +120,7 @@ def time_vs_power():
     """
     try:
         with engine.connect() as conn:
-            df = pd.read_sql_query(text(query), conn)
+            df = pd.read_sql_query(text(query), conn) # type: ignore
         return df
     except Exception as e:
         print(f"Erro ao executar a consulta: {e}")
@@ -158,7 +158,7 @@ def temp_vs_power():
     """
     try:
         with engine.connect() as conn:
-            df = pd.read_sql_query(text(query), conn)
+            df = pd.read_sql_query(text(query), conn) # type: ignore
         return df
     except Exception as e:
         print(f"Erro ao executar a consulta: {e}")

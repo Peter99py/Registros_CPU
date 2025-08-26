@@ -1,5 +1,5 @@
 import streamlit as st
-from src.charts.line_charts import grafico_linhas
+from src.charts.line_charts import grafico_linhas # type: ignore
 from src.queries.queries import time_vs_temp, temp_vs_speed, time_vs_power, temp_vs_power
 
 # Título da aplicação
