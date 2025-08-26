@@ -2,7 +2,7 @@
 
 ## Visão Geral do Projeto
 
-Este projeto implementa um pipeline **ETL (Extract, Transform, Load)** completo para monitorar dados de telemetria da CPU (dados extraídos via log do [Coretemp](https://exemplo.com)
+Este projeto implementa um pipeline **ETL (Extract, Transform, Load)** completo para monitorar dados de telemetria da CPU (dados extraídos via log do [Coretemp](https://www.alcpu.com/CoreTemp/)
  ), incluindo **temperatura dos núcleos**, **velocidade de clock** e **consumo de energia**. Os dados são coletados, limpos, transformados, e carregados em um banco de dados **PostgreSQL**. Posteriormente, um dashboard interativo é desenvolvido utilizando **Streamlit** para visualizar e analisar essas métricas importantes da CPU. O objetivo é fornecer uma ferramenta para acompanhar o desempenho e o comportamento térmico e energético do processador.
 
 ## Funcionalidades Principais
@@ -121,13 +121,7 @@ O dashboard Streamlit exibe quatro gráficos de linha, utilizando dados consulta
 
 Para configurar e executar o projeto, siga os passos abaixo:
 
-1.  **Estrutura de Pastas**: Na raiz do seu projeto, crie os seguintes diretórios:
-    *   `data_raw`
-    *   `data_loaded_raw`
-    *   `data_processed`
-    *   `data_loaded_processed`
-2.  **Dados Brutos**: Coloque seus arquivos CSV de telemetria da CPU (extraídos do `coretemp`) dentro da pasta `data_raw`.
-3.  **Configuração do Ambiente Python**:
+1.  **Configuração do Ambiente Python**:
     *   Recomendo criar e ativar um ambiente virtual:
         python -m venv venv
         # Para Windows:
@@ -136,24 +130,33 @@ Para configurar e executar o projeto, siga os passos abaixo:
         source venv/bin/activate
 
     *   Instale as dependências necessárias:
-        pip install pandas streamlit altair sqlalchemy psycopg2-binary
+        `pandas streamlit altair sqlalchemy psycopg2-binary`
 
-4.  **Configuração do PostgreSQL**:
+2.  **Configuração do PostgreSQL**:
     *   Certifique-se de ter uma instância do PostgreSQL (o projeto espera `localhost:5432`).
     *   Crie seu banco de dados.
     *   Ajuste as credenciais nos arquivos `load.py` e `queries.py` conforme sua configuração.
+
+3.  **Execute o arquivo run_main.bat**: isso inicializará o arquivo main.py, criando os seguintes diretórios:
+    *   `data_raw`
+    *   `data_loaded_raw`
+    *   `data_processed`
+    *   `data_loaded_processed`
+4.  **Dados Brutos**: Coloque seus arquivos CSV de telemetria da CPU (extraídos do `coretemp`) dentro da pasta `data_raw`.
+
 5.  **Executar o Pipeline ETL**:
-    *   Primeiro, execute o script de transformação para limpar os dados:
+    *   Volte ao terminal onde está sendo executado o main.py e siga as instruções para processar os arquivos:
         python pipeline.py
         Este script moverá os arquivos de `data_raw` para `data_loaded_raw` e salvará os arquivos processados em `data_processed`.
-    *   Em seguida, execute o script de carregamento para inserir os dados no PostgreSQL:
+    *   Em seguida, continue seguindo as instruções no terminal para inserir os dados no PostgreSQL:
         python load.py
         Este script carregará os arquivos de `data_processed` para a tabela `raw_data` no esquema `coretemp` e moverá os arquivos para `data_loaded_processed`.
-6.  **Executar o Dashboard Streamlit**:
-    *   No terminal, navegue até a raiz do diretório do projeto.
-    *   Inicie a aplicação Streamlit:
-        streamlit run app.py
+        `Você pode modificar os parametros para upload dos arquivos para onde desejar dentro do arquivo load.py.`
 
+6.  **Executar o Dashboard Streamlit**:
+       `Os parâmetros para criação do dashboard estão no arquivo app.py dentro do diretório dashboard.`
+    *   Inicie a aplicação Streamlit:
+        Execute o arquivo run_dashboard.bat
     *   O dashboard será automaticamente aberto em seu navegador web padrão.
 
 ## Contribuição
