@@ -72,14 +72,13 @@ def process_file(file_path, output_path): # type: ignore
     dados.to_csv(output_path, index=False)  # type: ignore
     print(f"\nArquivo processado e salvo em: {output_path}")
 
-def main():
+def pipeline():
     print("\n--- Iniciando o processo de ETL para os arquivos CSV... ---")
     
     files_to_process = [f for f in os.listdir(raw_data_path) if f.endswith('.csv')]
     
     if not files_to_process:
         print("\nNenhum arquivo .csv encontrado na pasta 'data_raw'.")
-        input("\nPressione Enter para sair...")
         return
 
     print(f"Encontrados {len(files_to_process)} arquivos para processar.")
@@ -105,7 +104,4 @@ def main():
             return
 
     print("\n--- Processo finalizado! ---")
-    input("\nPressione Enter para sair...")
-
-if __name__ == "__main__":
-    main()
+    input("\nPressione Enter para continuar...")

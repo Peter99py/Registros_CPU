@@ -84,7 +84,3 @@ def load_data_to_db():
             print("!!! Nenhum arquivo foi movido para a pasta 'data_loaded_processed'.")
 
     print("\n--- Processo de carregamento finalizado! ---")
-    input("\nPressione Enter para sair...")
-
-if __name__ == "__main__":
-    load_data_to_db()
