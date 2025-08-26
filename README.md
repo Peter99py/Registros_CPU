@@ -18,7 +18,7 @@ Este projeto implementa um pipeline **ETL (Extract, Transform, Load)** completo 
 ## Estrutura do Projeto
 
 A organização do projeto segue a seguinte estrutura de arquivos:
-
+```
 Registros CPU
 ├── .venv/
 ├── dashboard/
@@ -39,7 +39,7 @@ Registros CPU
 │   └── pipeline.py
 ├── amostra_dados_brutos.xlsx
 └── README.md
-
+```
 ## Tecnologias Utilizadas
 
 O projeto faz uso das seguintes tecnologias e bibliotecas:
