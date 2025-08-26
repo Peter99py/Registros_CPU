@@ -2,16 +2,12 @@ import pandas as pd
 import os
 import shutil
 
-# Diretório onde os arquivos CSV originais estão.
 raw_data_path = "data_raw"
 
-# Diretório para onde os arquivos originais serão movidos após o processamento.
 loaded_data_path = "data_loaded_raw"
 
-# Diretório onde os arquivos processados e limpos serão salvos.
 processed_data_path = "data_processed"
 
-# Garante que os diretórios de destino existam. Se não existirem, eles serão criados.
 os.makedirs(loaded_data_path, exist_ok=True)
 os.makedirs(processed_data_path, exist_ok=True)
 
@@ -73,14 +69,12 @@ def process_file(file_path, output_path): # type: ignore
     linhas_finais = len(dados)
     print(f"\nLinhas após o processamento: {linhas_finais} (removidas {linhas_iniciais - linhas_finais} linhas)")
 
-    # Salva o DataFrame processado no caminho de saída
     dados.to_csv(output_path, index=False)  # type: ignore
     print(f"\nArquivo processado e salvo em: {output_path}")
 
 def main():
     print("\n--- Iniciando o processo de ETL para os arquivos CSV... ---")
     
-    # Lista todos os arquivos na pasta de dados brutos
     files_to_process = [f for f in os.listdir(raw_data_path) if f.endswith('.csv')]
     
     if not files_to_process:
@@ -90,7 +84,6 @@ def main():
 
     print(f"Encontrados {len(files_to_process)} arquivos para processar.")
     
-    # Pega cada arquivo encontrado
     for file_name in files_to_process:
         source_file_path = os.path.join(raw_data_path, file_name)
         destination_file_path = os.path.join(loaded_data_path, file_name)
@@ -110,7 +103,7 @@ def main():
             print("!!! O arquivo não será movido.")
             input("\nPressione Enter para sair...")
             return
-        
+
     print("\n--- Processo finalizado! ---")
     input("\nPressione Enter para sair...")
 
