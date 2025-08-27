@@ -6,3 +6,4 @@ data_loaded_raw/
 data_loaded_processed/
 dashboard\src\charts\__pycache__\line_charts.cpython-313.pyc
 amostra_dados_brutos.xlsx
+teste.py

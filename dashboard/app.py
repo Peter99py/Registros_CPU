@@ -1,6 +1,6 @@
 import streamlit as st
-from src.charts.line_charts import grafico_linhas # type: ignore
-from src.queries.queries import time_vs_temp, temp_vs_speed, time_vs_power, temp_vs_power
+from src.charts.charts import grafico_linhas, grafico_colunas # type: ignore
+from src.queries.queries import time_vs_temp, temp_vs_speed, time_vs_power, temp_vs_power, faixas_temp
 
 # Título da aplicação
 st.markdown(
@@ -8,6 +8,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+df_faixas_temp = faixas_temp()
+grafico = grafico_colunas(df_faixas_temp, "categoria", "media diaria", titulo='Média Diária de Minutos por Faixa de Temperatura', mostrar_rotulos=True, posicao_rotulo='fora', cor_rotulo='black')
+st.altair_chart(grafico, use_container_width=True)
 
 df_temp_vs_speed = temp_vs_speed()
 grafico = grafico_linhas(df_temp_vs_speed, "core temp", "core speed", 'type', titulo='Temperatura do Núcleo vs Velocidade do Núcleo')

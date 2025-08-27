@@ -81,7 +81,7 @@ O script `pipeline.py` é responsável por preparar os dados brutos para o armaz
 5.  **Reordenação e Renomeação**: As colunas são selecionadas, reordenadas e renomeadas para um padrão `snake_case` para padronização e facilidade de consulta no banco de dados.
 6.  **Salvamento e Movimentação**: O DataFrame processado é salvo como um novo arquivo CSV na pasta `data_processed`. O arquivo original de `data_raw` é então movido para `data_loaded_raw`, indicando que foi processado com sucesso.
 
-### 📥 Carregamento (`load.py`)
+### Carregamento (`load.py`)
 
 O script `load.py` é responsável por carregar os dados transformados no banco de dados PostgreSQL.
 
@@ -92,7 +92,7 @@ O script `load.py` é responsável por carregar os dados transformados no banco 
 
 ## Dashboard Interativo (`app.py`)
 
-O dashboard Streamlit exibe quatro gráficos de linha, utilizando dados consultados do PostgreSQL. Todos os gráficos utilizam a função `grafico_linhas` (definida em `src/charts/line_charts.py`) que renderiza gráficos **Altair** com pontos, eixos `x` e `y` com títulos, e cores para diferenciar os tipos de agregação (Mínimo, Médio, Máximo).
+O dashboard Streamlit exibe quatro gráficos de linha, utilizando dados consultados do PostgreSQL. Todos os gráficos utilizam a função `grafico_linhas` (definida em `src/charts/line_charts.py`) que renderiza gráficos **Altair**.
 
 ### Gráficos Exibidos:
 

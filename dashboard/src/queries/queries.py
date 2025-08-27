@@ -163,3 +163,87 @@ def temp_vs_power():
     except Exception as e:
         print(f"Erro ao executar a consulta: {e}")
         return None
+    
+# média diária de minutos por faixa de temperatura do processador
+def faixas_temp():
+    engine = get_engine()
+
+    query = """
+            WITH minutos_por_dia AS (
+        SELECT
+            DATE(time) AS dia,
+            COUNT(time) / 6.0 AS minutos,
+            '<60' AS categoria
+        FROM
+            coretemp.raw_data
+        WHERE
+            core_temp_0 < 60
+        GROUP BY
+            DATE(time)
+    UNION ALL
+        SELECT
+            DATE(time) AS dia,
+            COUNT(time) / 6.0 AS minutos,
+            '>=60 & <70' AS categoria
+        FROM
+            coretemp.raw_data
+        WHERE
+            core_temp_0 >= 60 AND core_temp_0 < 70
+        GROUP BY
+            DATE(time)
+    UNION ALL
+        SELECT
+            DATE(time) AS dia,
+            COUNT(time) / 6.0 AS minutos,
+            '>=70 & <80' AS categoria
+        FROM
+            coretemp.raw_data
+        WHERE
+            core_temp_0 >= 70 AND core_temp_0 < 80
+        GROUP BY
+            DATE(time)
+    UNION ALL
+        SELECT
+            DATE(time) AS dia,
+            COUNT(time) / 6.0 AS minutos,
+            '>=80 & <90' AS categoria
+        FROM
+            coretemp.raw_data
+        WHERE
+            core_temp_0 >= 80 AND core_temp_0 < 90
+        GROUP BY
+            DATE(time)
+    UNION ALL
+        SELECT
+            DATE(time) AS dia,
+            COUNT(time) / 6.0 AS minutos,
+            '>=90' AS categoria
+        FROM
+            coretemp.raw_data
+        WHERE
+            core_temp_0 > 90
+        GROUP BY
+            DATE(time)
+    )
+    SELECT
+        ROUND(AVG(minutos)) AS "media diaria",
+        categoria,
+		CASE 
+		WHEN categoria = '<60' THEN 1
+		WHEN categoria = '>=60 & <70' THEN 2
+		WHEN categoria = '>=70 & <80' THEN 3
+		WHEN categoria = '>=80 & <90' THEN 4
+		WHEN categoria = '>=90' THEN 5
+		END AS ordernar
+    FROM
+        minutos_por_dia
+    GROUP BY
+        categoria
+    """
+    try:
+        with engine.connect() as conn:
+            df = pd.read_sql_query(text(query), conn) # type: ignore
+        return df
+    except Exception as e:
+        print(f"Erro ao executar a consulta: {e}")
+        return None
