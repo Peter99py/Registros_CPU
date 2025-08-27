@@ -1,4 +1,4 @@
-# 📊 Monitoramento de CPU: Dashboard Interativo com Streamlit
+# Monitoramento de CPU: Dashboard Interativo com Streamlit
 
 ## Visão Geral do Projeto
 
@@ -50,7 +50,7 @@ O projeto faz uso das seguintes tecnologias e bibliotecas:
 *   **Altair**: Biblioteca de visualização usada para criar os gráficos interativos no dashboard.
 *   **SQLAlchemy**: Toolkit Python SQL para interação com o banco de dados PostgreSQL.
 *   **Psycopg2**: Adaptador PostgreSQL para Python, utilizado pela SQLAlchemy para conexão com o banco de dados.
-*   **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional (SGBD) utilizado para armazenar os dados de telemetria da CPU.
+*   **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional utilizado para armazenar os dados de telemetria da CPU.
 
 ## Dados
 
@@ -92,7 +92,7 @@ O script `load.py` é responsável por carregar os dados transformados no banco 
 
 ## Dashboard Interativo (`app.py`)
 
-O dashboard Streamlit exibe quatro gráficos de linha, utilizando dados consultados do PostgreSQL. Todos os gráficos utilizam a função `grafico_linhas` (definida em `src/charts/line_charts.py`) que renderiza gráficos **Altair**.
+O dashboard Streamlit exibe quatro gráficos de linha, utilizando dados consultados do PostgreSQL. Todos os gráficos utilizam suas devidas funções (definidas em `src/charts/charts.py`) que renderiza gráficos **Altair**.
 
 ### Gráficos Exibidos:
 
@@ -116,7 +116,12 @@ O dashboard Streamlit exibe quatro gráficos de linha, utilizando dados consulta
     *   **Eixo X**: "core temp"
     *   **Eixo Y**: "cpu power"
     *   Ilustra os valores Mínimo, Médio e Máximo do consumo de energia da CPU para cada temperatura do núcleo.
-
+5.  **Média Diária de Minutos por Faixa de Temperatura**:
+    *   **Título**: 'Média Diária de Minutos por Faixa de Temperatura'
+    *   **Eixo X**: "Faixas de temperatura (<60, >=60 & <70, >=70 & <80, >=80 & <90, >=90)"
+    *   **Eixo Y**: "Média diária em minutos"
+    *   Mostra quanto tempo, em média por dia, o processador permaneceu em cada faixa de temperatura.
+    
 ## Como Executar o Projeto
 
 Para configurar e executar o projeto, siga os passos abaixo:
@@ -137,7 +142,8 @@ Para configurar e executar o projeto, siga os passos abaixo:
     *   Crie seu banco de dados.
     *   Ajuste as credenciais nos arquivos `load.py` e `queries.py` conforme sua configuração.
 
-3.  **Execute o arquivo run_main.bat**: isso inicializará o arquivo main.py, criando os seguintes diretórios:
+3.  **Execute o arquivo run_main.bat**: 
+    isso inicializará o arquivo main.py, criando os seguintes diretórios:
     *   `data_raw`
     *   `data_loaded_raw`
     *   `data_processed`

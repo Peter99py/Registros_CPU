@@ -239,6 +239,8 @@ def faixas_temp():
         minutos_por_dia
     GROUP BY
         categoria
+    ORDER BY
+        ordernar
     """
     try:
         with engine.connect() as conn:
