@@ -19,7 +19,7 @@ with aba_resumo:
     grafico = grafico_colunas(df_faixas_temp,
         coluna_x="categoria",
         coluna_y="media diaria",
-        titulo="Média Diária de Minutos por Faixa de Temperatura",
+        titulo="Média Diária de Minutos por Faixa de Temperatura (ºC)",
         mostrar_rotulos=True,
         posicao_rotulo="fora",
         cor_rotulo="black"
