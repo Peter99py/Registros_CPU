@@ -19,7 +19,7 @@ with aba_resumo:
     grafico = grafico_colunas(df_faixas_temp,
         coluna_x="categoria",
         coluna_y="media diaria",
-        titulo="Média Diária de Minutos por Faixa de Temperatura (ºC)",
+        titulo="Média Diária de Minutos por Faixa de Temperatura(ºC)",
         mostrar_rotulos=True,
         posicao_rotulo="fora",
         cor_rotulo="black"
@@ -38,7 +38,7 @@ with aba_series:
             coluna_x="time of day",
             coluna_y="core temp",
             coluna_categoria="type",
-            titulo="Temperatura do Núcleo ao Longo do Dia"
+            titulo="Temperatura do Núcleo(ºC) ao Longo do Dia"
         )
         st.altair_chart(grafico, use_container_width=True)
 
@@ -52,7 +52,7 @@ with aba_series:
         )
         st.altair_chart(grafico, use_container_width=True)
 
-    st.caption("Compare lado a lado: picos de temperatura tendem a coincidir com picos de energia?")
+    st.caption("Padrões da temperatura e consumo de energia durante o dia.")
 
 with aba_relacoes:
     st.subheader("Relações entre variáveis")
@@ -64,7 +64,7 @@ with aba_relacoes:
             coluna_x="core temp",
             coluna_y="core speed",
             coluna_categoria="type",
-            titulo="Temperatura do Núcleo vs Velocidade do Núcleo"
+            titulo="Temperatura do Núcleo(ºC) vs Velocidade do Núcleo"
         )
         st.altair_chart(grafico, use_container_width=True)
 
@@ -74,8 +74,8 @@ with aba_relacoes:
             coluna_x="core temp",
             coluna_y="cpu power",
             coluna_categoria="type",
-            titulo="Energia do CPU vs Temperatura do Núcleo"
+            titulo="Temperatura do Núcleo(ºC) vs Energia do CPU"
         )
         st.altair_chart(grafico, use_container_width=True)
 
-    st.caption("Veja como a velocidade e o consumo de energia variam conforme a temperatura do núcleo.")
+    st.caption("Variações da velocidade e energia do CPU em relação à temperatura.")

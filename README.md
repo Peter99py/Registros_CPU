@@ -37,8 +37,10 @@ Registros CPU
 ├── scripts/
 │   ├── load.py
 │   └── pipeline.py
-├── amostra_dados_brutos.xlsx
-└── README.md
+├── main.py
+├── README.md
+├── run_dashboard.bat
+└── run_pipeline.bat
 ```
 ## Tecnologias Utilizadas
 
@@ -142,7 +144,7 @@ Para configurar e executar o projeto, siga os passos abaixo:
     *   Crie seu banco de dados.
     *   Ajuste as credenciais nos arquivos `load.py` e `queries.py` conforme sua configuração.
 
-3.  **Execute o arquivo run_main.bat**: 
+3.  **Execute o arquivo run_app.bat**: 
     isso inicializará o arquivo main.py, criando os seguintes diretórios:
     *   `data_raw`
     *   `data_loaded_raw`
@@ -157,13 +159,13 @@ Para configurar e executar o projeto, siga os passos abaixo:
     *   Em seguida, continue seguindo as instruções no terminal para inserir os dados no PostgreSQL:
         python load.py
         Este script carregará os arquivos de `data_processed` para a tabela `raw_data` no esquema `coretemp` e moverá os arquivos para `data_loaded_processed`.
-        `Você pode modificar os parametros para upload dos arquivos para onde desejar dentro do arquivo load.py.`
+    `Você pode modificar os parametros para upload dos arquivos para onde desejar dentro do arquivo load.py.`
 
 6.  **Executar o Dashboard Streamlit**:
-       `Os parâmetros para criação do dashboard estão no arquivo app.py dentro do diretório dashboard.`
     *   Inicie a aplicação Streamlit:
         Execute o arquivo run_dashboard.bat
     *   O dashboard será automaticamente aberto em seu navegador web padrão.
+    `Os parâmetros para criação do dashboard estão no arquivo app.py dentro do diretório dashboard.`
 
 ## Contribuição
 
