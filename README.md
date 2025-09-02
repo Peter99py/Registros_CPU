@@ -130,11 +130,11 @@ Para configurar e executar o projeto, siga os passos abaixo:
 
 1.  **Configuração do Ambiente Python**:
     *   Recomendo criar e ativar um ambiente virtual:
-        python -m venv venv
+        python -m venv .venv
         # Para Windows:
-        .\venv\Scripts\activate
+        .venv\Scripts\activate
         # Para macOS/Linux:
-        source venv/bin/activate
+        source .venv/bin/activate
 
     *   Instale as dependências necessárias:
         `pandas streamlit altair sqlalchemy psycopg2-binary`
