@@ -2,11 +2,11 @@ import pandas as pd
 import os
 import shutil
 
-raw_data_path = "data_raw"
+raw_data_path = "data/raw"
 
-loaded_data_path = "data_loaded_raw"
+loaded_data_path = "data/loaded_raw"
 
-processed_data_path = "data_processed"
+processed_data_path = "data/processed"
 
 os.makedirs(loaded_data_path, exist_ok=True)
 os.makedirs(processed_data_path, exist_ok=True)
@@ -78,7 +78,7 @@ def pipeline():
     files_to_process = [f for f in os.listdir(raw_data_path) if f.endswith('.csv')]
     
     if not files_to_process:
-        print("\nNenhum arquivo .csv encontrado na pasta 'data_raw'.")
+        print("\nNenhum arquivo .csv encontrado na pasta 'data/raw'.")
         return
 
     print(f"Encontrados {len(files_to_process)} arquivos para processar.")

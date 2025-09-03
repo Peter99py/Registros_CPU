@@ -2,8 +2,7 @@
 
 ## Visão Geral do Projeto
 
-Este projeto implementa um pipeline **ETL (Extract, Transform, Load)** completo para monitorar dados de telemetria da CPU (dados extraídos via log do [Coretemp](https://www.alcpu.com/CoreTemp/)
- ), incluindo **temperatura dos núcleos**, **velocidade de clock** e **consumo de energia**. Os dados são coletados, limpos, transformados, e carregados em um banco de dados **PostgreSQL**. Posteriormente, um dashboard interativo é desenvolvido utilizando **Streamlit** para visualizar e analisar essas métricas importantes da CPU. O objetivo é fornecer uma ferramenta para acompanhar o desempenho e o comportamento térmico e energético do processador.
+Este projeto implementa um pipeline **ETL (Extract, Transform, Load)** completo para monitorar dados de telemetria da CPU (dados extraídos via log do [Coretemp](https://www.alcpu.com/CoreTemp/)), incluindo **temperatura dos núcleos**, **velocidade de clock** e **consumo de energia**. Os dados são coletados, limpos, transformados, e carregados em um banco de dados **PostgreSQL**. Posteriormente, um dashboard interativo é desenvolvido utilizando **Streamlit** para visualizar e analisar essas métricas importantes da CPU. O objetivo é fornecer uma ferramenta para acompanhar o desempenho e o comportamento térmico e energético do processador.
 
 ## Funcionalidades Principais
 

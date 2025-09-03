@@ -4,23 +4,24 @@ import pandas as pd
 import os
 import shutil
 
-# Conexão para o PostgreSQL
-usuario = "postgres"
-senha = "postgres"
-host = "localhost"
-porta = "5432"
-banco = "pessoal"
+def get_engine():
+    user = "postgres"
+    password = "postgres"
+    host = "localhost"
+    port = 5432
+    db = "pessoal"
+    url = f"postgresql+psycopg://{user}:{password}@{host}:{port}/{db}"
+    return create_engine(url)
+
+engine = get_engine()
 schema = "coretemp"
-
 nome_tabela = "raw_data"
-
-engine = create_engine(f"postgresql+psycopg2://{usuario}:{senha}@{host}:{porta}/{banco}")
 
 Session = sessionmaker(bind=engine)
 
-data_processed_path = "data_processed"
+data_processed_path = "data/processed"
 
-data_loaded_processed_path = "data_loaded_processed"
+data_loaded_processed_path = "data/loaded_processed"
 
 os.makedirs(data_loaded_processed_path, exist_ok=True)
 
@@ -31,7 +32,7 @@ def load_data_to_db():
     files_to_load = [f for f in os.listdir(data_processed_path) if f.endswith('.csv')]
 
     if not files_to_load:
-        print("\nNenhum arquivo .csv encontrado na pasta 'data_processed'.")
+        print("\nNenhum arquivo .csv encontrado na pasta 'data/processed'.")
         return
 
     print(f"Encontrados {len(files_to_load)} arquivos para carregar.")
@@ -47,7 +48,7 @@ def load_data_to_db():
                 print(f"\n--- Processando e Carregando: {file_name} ---")
 
                 try:
-                    dados = pd.read_csv(file_path) # type: ignore
+                    dados = pd.read_csv(file_path, parse_dates=['time']) # type: ignore
 
                     num_rows = len(dados)
 
@@ -80,6 +81,6 @@ def load_data_to_db():
             session.rollback()
             print(f"\n!!! ERRO FATAL no processo de carregamento: {e}")
             print("!!! O processo foi abortado. Todas as alterações no banco de dados foram revertidas.")
-            print("!!! Nenhum arquivo foi movido para a pasta 'data_loaded_processed'.")
+            print("!!! Nenhum arquivo foi movido para a pasta 'data/loaded_processed'.")
 
     print("\n--- Processo de carregamento finalizado! ---")

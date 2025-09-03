@@ -1,5 +1,5 @@
 @echo off
 call .venv\Scripts\activate
-python main.py
+python scripts\main.py
 deactivate
 pause

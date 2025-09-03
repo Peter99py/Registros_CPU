@@ -1,12 +1,12 @@
 import os
-import scripts.pipeline as pipeline
-import scripts.load as load
+import pipeline as pipeline
+import load as load
 
 print("---Iniciando aplicação ---")
 
 def files():
 
-    files = ["data_loaded_processed", "data_loaded_raw", "data_processed", "data_raw"]
+    files = ["data/loaded_processed", "data/loaded_raw", "data/processed", "data/raw"]
 
     for arquivos in files:
         if not os.path.exists(arquivos):
