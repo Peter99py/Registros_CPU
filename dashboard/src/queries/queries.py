@@ -66,6 +66,56 @@ def dias_disponiveis(year=None, month=None):
         df = pd.read_sql_query(text(query), conn, params=params)  # type: ignore
     return df["day"].tolist()
 
+# descritivo da temperatura
+def resumo_temp(year=None, month=None, day=None):
+    engine = get_engine()
+    where_sql, params = filtro_data(year, month, day)
+    query = f"""
+    WITH filtrado AS(
+    SELECT DATE(time) AS time, core_temp_0
+    FROM coretemp.raw_data
+    {where_sql}
+    )
+
+    SELECT 
+        EXTRACT(YEAR FROM time)::INTEGER AS "ano",
+        EXTRACT(MONTH FROM time)::INTEGER AS "mes",
+        EXTRACT(DAY FROM time)::INTEGER AS "dia",
+        MIN(core_temp_0) AS "core temp",
+        'MIN' AS "type"
+    FROM filtrado
+    GROUP BY 1,2,3
+
+    UNION ALL
+
+    SELECT 
+        EXTRACT(YEAR FROM time)::INTEGER AS "ano",
+        EXTRACT(MONTH FROM time)::INTEGER AS "mes",
+        EXTRACT(DAY FROM time)::INTEGER AS "dia",
+        AVG(core_temp_0)::INTEGER AS "core temp",
+        'AVG' AS "type"
+    FROM filtrado
+    GROUP BY 1,2,3
+
+    UNION ALL
+
+    SELECT 
+        EXTRACT(YEAR FROM time)::INTEGER AS "ano",
+        EXTRACT(MONTH FROM time)::INTEGER AS "mes",
+        EXTRACT(DAY FROM time)::INTEGER AS "dia",
+        MAX(core_temp_0) AS "core temp",
+        'MAX' AS "type"
+    FROM filtrado
+    GROUP BY 1,2,3
+    """
+    try:
+        with engine.connect() as conn:
+            df = pd.read_sql_query(text(query), conn, params=params)  # type: ignore
+        return df
+    except Exception as e:
+        print(f"Erro ao executar a consulta resumo_temp: {e}")
+        return None
+
 # temperatura vs core speed
 def temp_vs_speed(year=None, month=None, day=None):
     engine = get_engine()
@@ -77,22 +127,22 @@ def temp_vs_speed(year=None, month=None, day=None):
         {where_sql}
     )
     SELECT
-        core_temp_0 as "core temp",
-        MIN(core_speed_0)::INTEGER as "core speed",
+        core_temp_0 AS "core temp",
+        MIN(core_speed_0)::INTEGER AS "core speed",
         'MIN' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
         core_temp_0 as "core temp",
-        AVG(core_speed_0)::INTEGER as "core speed",
+        AVG(core_speed_0)::INTEGER AS "core speed",
         'AVG' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
-        core_temp_0 as "core temp",
-        MAX(core_speed_0)::INTEGER as "core speed",
+        core_temp_0 AS "core temp",
+        MAX(core_speed_0)::INTEGER AS "core speed",
         'MAX' AS "type"
     FROM filtrado
     GROUP BY 1
@@ -116,22 +166,22 @@ def time_vs_temp(year=None, month=None, day=None):
         {where_sql}
     )
     SELECT
-        EXTRACT(HOUR FROM time) as "time of day",
-        MIN(core_temp_0)::INTEGER as "core temp",
+        EXTRACT(HOUR FROM time) AS "time of day",
+        MIN(core_temp_0) AS "core temp",
         'MIN' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
-        EXTRACT(HOUR FROM time) as "time of day",
-        AVG(core_temp_0)::INTEGER as "core temp",
+        EXTRACT(HOUR FROM time) AS "time of day",
+        AVG(core_temp_0)::INTEGER AS "core temp",
         'AVG' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
-        EXTRACT(HOUR FROM time) as "time of day",
-        MAX(core_temp_0)::INTEGER as "core temp",
+        EXTRACT(HOUR FROM time) AS "time of day",
+        MAX(core_temp_0) AS "core temp",
         'MAX' AS "type"
     FROM filtrado
     GROUP BY 1
@@ -155,22 +205,22 @@ def time_vs_power(year=None, month=None, day=None):
         {where_sql}
     )
     SELECT
-        EXTRACT(HOUR FROM time) as "time of day",
-        MIN(cpu_power)::INTEGER as "cpu power",
+        EXTRACT(HOUR FROM time) AS "time of day",
+        MIN(cpu_power)::INTEGER AS "cpu power",
         'MIN' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
-        EXTRACT(HOUR FROM time) as "time of day",
-        AVG(cpu_power)::INTEGER as "cpu power",
+        EXTRACT(HOUR FROM time) AS "time of day",
+        AVG(cpu_power)::INTEGER AS "cpu power",
         'AVG' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
-        EXTRACT(HOUR FROM time) as "time of day",
-        MAX(cpu_power)::INTEGER as "cpu power",
+        EXTRACT(HOUR FROM time) AS "time of day",
+        MAX(cpu_power)::INTEGER AS "cpu power",
         'MAX' AS "type"
     FROM filtrado
     GROUP BY 1
@@ -194,22 +244,22 @@ def temp_vs_power(year=None, month=None, day=None):
         {where_sql}
     )
     SELECT
-        core_temp_0 as "core temp",
-        MIN(cpu_power)::INTEGER as "cpu power",
+        core_temp_0 AS "core temp",
+        MIN(cpu_power)::INTEGER AS "cpu power",
         'MIN' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
-        core_temp_0 as "core temp",
-        AVG(cpu_power)::INTEGER as "cpu power",
+        core_temp_0 AS "core temp",
+        AVG(cpu_power)::INTEGER AS "cpu power",
         'AVG' AS "type"
     FROM filtrado
     GROUP BY 1
     UNION ALL
     SELECT
-        core_temp_0 as "core temp",
-        MAX(cpu_power)::INTEGER as "cpu power",
+        core_temp_0 AS "core temp",
+        MAX(cpu_power)::INTEGER AS "cpu power",
         'MAX' AS "type"
     FROM filtrado
     GROUP BY 1
