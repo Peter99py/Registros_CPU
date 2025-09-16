@@ -72,13 +72,13 @@ with aba_resumo:
         nivel = st.selectbox("Nível de detalhe", ["Dia", "Mês", "Ano"])
 
         if nivel == "Dia":
-            df_plot = df_resumo_temp.groupby(["dia", "type"], as_index=False)["core temp"].mean()
+            df_plot = df_resumo_temp.groupby(["dia", "type"], as_index=False)["core temp"].max()
             x_col = "dia"
         elif nivel == "Mês":
-            df_plot = df_resumo_temp.groupby(["mes", "type"], as_index=False)["core temp"].mean()
+            df_plot = df_resumo_temp.groupby(["mes", "type"], as_index=False)["core temp"].max()
             x_col = "mes"
         else: 
-            df_plot = df_resumo_temp.groupby(["ano", "type"], as_index=False)["core temp"].mean()
+            df_plot = df_resumo_temp.groupby(["ano", "type"], as_index=False)["core temp"].max()
             x_col = "ano"
 
         grafico = grafico_linhas(
@@ -90,7 +90,6 @@ with aba_resumo:
         )
         st.altair_chart(grafico, use_container_width=True)
 
-    # ===== BLOCO 2: SEGUNDA LINHA =====
     st.markdown("---")
     grafico_col = grafico_colunas(
         df_faixas_temp,

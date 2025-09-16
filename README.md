@@ -27,16 +27,15 @@ Registros CPU
 │   │   └── queries/
 │   │       └── queries.py 
 │   └── app.py
-├── data_loaded_processed/
-├── data_loaded_raw/
-├── data_processed/
-├── data_raw/
-├── notebooks/
-│   └── exploracao.ipynb
+├──data
+│    ├── data_loaded_processed/
+│    ├── data_loaded_raw/
+│    ├── data_processed/
+│    └── data_raw/
 ├── scripts/
 │   ├── load.py
+│   ├── main.py
 │   └── pipeline.py
-├── main.py
 ├── README.md
 ├── run_dashboard.bat
 └── run_pipeline.bat
@@ -145,6 +144,7 @@ Para configurar e executar o projeto, siga os passos abaixo:
 
 3.  **Execute o arquivo run_app.bat**: 
     isso inicializará o arquivo main.py, criando os seguintes diretórios:
+    *   `data\`
     *   `data_raw`
     *   `data_loaded_raw`
     *   `data_processed`
@@ -152,9 +152,8 @@ Para configurar e executar o projeto, siga os passos abaixo:
 4.  **Dados Brutos**: Coloque seus arquivos CSV de telemetria da CPU (extraídos do `coretemp`) dentro da pasta `data_raw`.
 
 5.  **Executar o Pipeline ETL**:
-    *   Volte ao terminal onde está sendo executado o main.py e siga as instruções para processar os arquivos:
-        python pipeline.py
-        Este script moverá os arquivos de `data_raw` para `data_loaded_raw` e salvará os arquivos processados em `data_processed`.
+    *   Rode o arquivo run_pipeline.bat
+        No fim, este script moverá os arquivos de `data_raw` para `data_loaded_raw` e salvará os arquivos processados em `data_processed`.
     *   Em seguida, continue seguindo as instruções no terminal para inserir os dados no PostgreSQL:
         python load.py
         Este script carregará os arquivos de `data_processed` para a tabela `raw_data` no esquema `coretemp` e moverá os arquivos para `data_loaded_processed`.
