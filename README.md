@@ -135,7 +135,7 @@ Para configurar e executar o projeto, siga os passos abaixo:
         source .venv/bin/activate
 
     *   Instale as dependências necessárias:
-        `pandas streamlit altair sqlalchemy psycopg2-binary`
+        `pandas streamlit altair sqlalchemy psycopg[binary]`
 
 2.  **Configuração do PostgreSQL**:
     *   Certifique-se de ter uma instância do PostgreSQL (o projeto espera `localhost:5432`).
@@ -144,11 +144,13 @@ Para configurar e executar o projeto, siga os passos abaixo:
 
 3.  **Execute o arquivo run_app.bat**: 
     isso inicializará o arquivo main.py, criando os seguintes diretórios:
-    *   `data\`
-    *   `data_raw`
-    *   `data_loaded_raw`
-    *   `data_processed`
-    *   `data_loaded_processed`
+    ```
+    └──data\
+        ├──data_raw
+        ├──data_loaded_raw
+        ├──data_processed
+        └──data_loaded_processed
+    ```
 4.  **Dados Brutos**: Coloque seus arquivos CSV de telemetria da CPU (extraídos do `coretemp`) dentro da pasta `data_raw`.
 
 5.  **Executar o Pipeline ETL**:
