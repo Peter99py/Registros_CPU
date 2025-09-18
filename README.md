@@ -142,7 +142,7 @@ Para configurar e executar o projeto, siga os passos abaixo:
     *   Crie seu banco de dados.
     *   Ajuste as credenciais nos arquivos `load.py` e `queries.py` conforme sua configuração.
 
-3.  **Execute o arquivo run_app.bat**: 
+3.  **Execute o arquivo run_pipeline.bat**: 
     isso inicializará o arquivo main.py, criando os seguintes diretórios:
     ```
     └──data\
@@ -151,20 +151,21 @@ Para configurar e executar o projeto, siga os passos abaixo:
         ├──data_processed
         └──data_loaded_processed
     ```
-4.  **Dados Brutos**: Coloque seus arquivos CSV de telemetria da CPU (extraídos do `coretemp`) dentro da pasta `data_raw`.
-
-5.  **Executar o Pipeline ETL**:
-    *   Rode o arquivo run_pipeline.bat
-        No fim, este script moverá os arquivos de `data_raw` para `data_loaded_raw` e salvará os arquivos processados em `data_processed`.
+    * No fim, este script moverá os arquivos de `data_raw` para `data_loaded_raw` e salvará os arquivos processados em `data_processed`.
+    
     *   Em seguida, continue seguindo as instruções no terminal para inserir os dados no PostgreSQL:
         python load.py
         Este script carregará os arquivos de `data_processed` para a tabela `raw_data` no esquema `coretemp` e moverá os arquivos para `data_loaded_processed`.
+
     `Você pode modificar os parametros para upload dos arquivos para onde desejar dentro do arquivo load.py.`
 
-6.  **Executar o Dashboard Streamlit**:
+4.  **Dados Brutos**: Coloque seus arquivos CSV de telemetria da CPU (extraídos do `coretemp`) dentro da pasta `data_raw`.
+
+5.  **Executar o Dashboard Streamlit**:
     *   Inicie a aplicação Streamlit:
         Execute o arquivo run_dashboard.bat
     *   O dashboard será automaticamente aberto em seu navegador web padrão.
+    
     `Os parâmetros para criação do dashboard estão no arquivo app.py dentro do diretório dashboard.`
 
 ## Contribuição
